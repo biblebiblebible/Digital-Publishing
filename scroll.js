@@ -53,31 +53,6 @@ function moveTo()
 }
 //----------------------------------------------//
 
-window.addEventListener('scroll', function() {
-    const backgroundBox = document.getElementById('backgroundBox');
-    const scrollImage = document.getElementById('scrollImage');
-
-    const boxRect = backgroundBox.getBoundingClientRect();
-    const imageHeight = scrollImage.offsetHeight;
-    const boxHeight = backgroundBox.offsetHeight;
-    const windowHeight = window.innerHeight;
-
-    if (boxRect.top < windowHeight && boxRect.bottom > 0) {
-        const scrollTop = window.scrollY;
-        const boxTop = backgroundBox.offsetTop;
-        const boxBottom = boxTop + boxHeight;
-
-        const maxScroll = boxBottom - windowHeight;
-        const scrollPercentage = Math.min(Math.max((scrollTop - boxTop + windowHeight) / (boxHeight + windowHeight), 0), 1);
-
-        const imagePosition = (boxHeight - imageHeight) * scrollPercentage;
-        scrollImage.style.top = `${imagePosition}px`;
-    }
-});
-
-
-
-
 const wiperTrack = document.querySelector(".wiper-track");
 const wipes = Array.from(wiperTrack.children);
 const wipePrevBtn = document.querySelector(".wiper-button__right");
@@ -96,30 +71,4 @@ const arrowsBehaviour = (wipePrevBtn, wipeNextBtn, index) => {
     wipeNextBtn.classList.remove("is-hidden");
   }
 };
-
-const wipeSlide = (wiperTrack, activeSlide, nextSlide, targetIndex) => {
-  wiperTrack.style.transform =
-    "translateX(-" + (wipeWidth + 24) * (targetIndex - 1) + "px)";
-  activeSlide.classList.remove("active-swipe");
-  activeSlide.style.transform = "scale(1)";
-  nextSlide.classList.add("active-swipe");
-  nextSlide.style.transform = "scale(1.1)";
-};
-
-wipeNextBtn.addEventListener("click", (e) => {
-  const activeSlide = wiperTrack.querySelector(".active-swipe");
-  const nextSlide = activeSlide.nextElementSibling;
-  const targetIndex = wipes.findIndex((slide) => slide === nextSlide);
-  wipeSlide(wiperTrack, activeSlide, nextSlide, targetIndex);
-  arrowsBehaviour(wipePrevBtn, wipeNextBtn, targetIndex);
-});
-wipePrevBtn.addEventListener("click", (e) => {
-  const activeSlide = wiperTrack.querySelector(".active-swipe");
-  const nextSlide = activeSlide.previousElementSibling;
-  const targetIndex = wipes.findIndex((slide) => slide === nextSlide);
-  wipeSlide(wiperTrack, activeSlide, nextSlide, targetIndex);
-  arrowsBehaviour(wipePrevBtn, wipeNextBtn, targetIndex);
-});
-
-
 
